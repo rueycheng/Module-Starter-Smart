@@ -5,6 +5,8 @@ $VERSION = '0.0.3';
 use warnings;
 use strict;
 
+use parent qw(Module::Starter::Simple);
+
 =head1 NAME
 
 Module::Starter::Smart - A Module::Starter plugin for adding new modules into
@@ -16,16 +18,16 @@ version 0.0.3
 
 =head1 SYNOPSIS
 
-    use Module::Starter qw/Module::Starter::Simple Module::Starter::Smart/;
+    use Module::Starter qw/Module::Starter::Smart/;
     Module::Starter->create_distro(%args);
 
     # or in ~/.module-starter/config
-    plugin: Module::Starter::Simple Module::Starter::Smart
+    plugin: Module::Starter::Smart
 
     # create a new distribution named 'Foo-Bar'
     $ module-starter --module=Foo::Bar
 
-    # add a new module
+    # ... then add a new module
     $ module-starter --module=Foo::Bar::Me --distro=Foo-Bar
 
 =head1 DESCRIPTION
@@ -78,7 +80,7 @@ use ExtUtils::Command qw/mkpath/;
 use File::Spec;
 
 # Module implementation here
-use subs qw/_sort _pull_modules _list_modules _pull_t _list_t/;
+use subs qw/_unique_sort _pull_modules _list_modules _pull_t _list_t/;
 
 =head1 INTERFACE
 
@@ -89,19 +91,18 @@ rewiring its internal behaviors.
 
 sub create_distro {
     my $class = shift;
-    my %config = @_;
+    my $self = ref $class? $class: $class->new(@_);
 
-    my @modules = map { split /,/ } @{$config{modules}};
-    my $distro;
+    my $basedir = 
+	$self->{dir} || 
+	$self->{distro} || 
+	do { 
+	    (my $first = $self->{modules}[0]) =~ s/::/-/g;
+	    $first; 
+	};
 
-    if (not $config{distro}) {
-	$distro = $modules[0];
-	$distro =~ s/::/-/g;
-    }
-
-    my $basedir = $config{dir} || $config{distro} || $distro;
-    $config{modules} = [ join ',', _sort _pull_modules($basedir), @modules ];
-    $class->SUPER::create_distro(%config);
+    $self->{modules} = [ _unique_sort _pull_modules($basedir), @{$self->{modules}} ];
+    $self->SUPER::create_distro;
 }
 
 sub create_basedir {
@@ -152,7 +153,7 @@ sub _create_module {
 
 sub create_t {
     my $self = shift;
-    _sort $self->SUPER::create_t(@_), _pull_t $self->{basedir};
+    _unique_sort $self->SUPER::create_t(@_), _pull_t $self->{basedir};
 }
 
 sub _create_t {
@@ -234,12 +235,12 @@ sub create_Changes {
     my $fname = File::Spec->catfile( $self->{basedir}, "Changes" );
 
     if (-e $fname) {
-	$self->verbose( "Skipped $fname" );
+	$self->progress( "Skipped $fname" );
     } else {
 	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
 	print $fh $self->Changes_guts();
 	close $fh;
-	$self->verbose( "Created $fname" );
+	$self->progress( "Created $fname" );
     }
 
     return "Changes";
@@ -252,17 +253,18 @@ sub create_README {
     my $fname = File::Spec->catfile( $self->{basedir}, "README" );
 
     if (-e $fname) {
-	$self->verbose( "Skipped $fname" );
+	$self->progress( "Skipped $fname" );
     } else {
 	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
 	print $fh $self->README_guts($build_instructions);
 	close $fh;
-	$self->verbose( "Created $fname" );
+	$self->progress( "Created $fname" );
     }
 
     return "README";
 }
 
+# Utility functions
 sub _pull_modules {
     my $basedir = shift;
     return unless $basedir;
@@ -308,7 +310,7 @@ sub _list_t {
 }
 
 # Remove duplicated entries
-sub _sort {
+sub _unique_sort {
     my %bag = map { $_ => 1 } @_;
     sort keys %bag;
 }
