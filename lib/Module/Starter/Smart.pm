@@ -32,16 +32,25 @@ version 0.0.3
 
 =head1 DESCRIPTION
 
-Module::Starter::Smart is a simple helper plugin for Module::Starter.  It overrides
-the C<create_distro>, C<create_modules>, and C<create_t> subroutines defined 
-in whichever engine plugin in use (say, Module::Starter::Simple.)  When 
-invoked with a existing distribution, the plugin may bypass the C<create_basedir>
-subroutine, pull in a list of existing modules as well as test files, create new
-modules, and recreate the manifest file accordingly.  
+Module::Starter::Smart is a simple helper plugin for L<Module::Starter>.  It
+subclasses L<Module::Starter::Simple> and provides its own implementatoin for
+several file creation subroutines, such as C<create_distro>, C<create_modules>,
+C<create_t>, and so on.  These new implementations were designed to work 
+with existing distributions.  
 
-=head2 Adding a new module to an existing distribution
+When invoked, the plugin checks if the distribution is already created.  If so,
+the plugin would bypass C<create_basedir>) and go ahead pull in all the
+existing modules and test files; these information would be used later in the
+corresponding file creation subroutines for skipping already-created files.
 
-Say you have an existing distro, Goof-Ball, and you want to add a new module, Goof::Troop.
+B<UPDATE>: This plugin only covers the simplest use cases.  For advanced usage,
+check out L<Module::Starter::AddModule>.
+
+
+=head2 Example
+
+Say you have an existing distro, Goof-Ball, and you want to add a new module,
+Goof::Troop.
 
     % ls -R Goof-Ball
     Build.PL  Changes   MANIFEST  README    lib/      t/
@@ -55,7 +64,9 @@ Say you have an existing distro, Goof-Ball, and you want to add a new module, Go
     Goof-Ball/t:
     00.load.t       perlcritic.t    pod-coverage.t  pod.t
 
-Go to the directory containing your existing distribution and run module-starter, giving it the names of the existing distribution and the new module:
+Go to the directory containing your existing distribution and run
+module-starter, giving it the names of the existing distribution and the new
+module:
 
     % module-starter --distro=Goof-Ball --module=Goof::Troop
     Created starter directories and files
@@ -323,18 +334,14 @@ __END__
 
 =head1 DEPENDENCIES
 
-Module::Starter::Smart relies on Module::Starter::Simple to properly function.
-Be sure to load Module::Starter::Simple or any of its subclasses before
-Module::Starter::Smart when importing Module::Starter.
+Module::Starter::Smart subclasses L<Module::Starter::Simple>.
 
 =head1 INCOMPATIBILITIES
 
-The plugin works perfectly with other template plugins, i.e. Module::Starter::PBP
-(I started this module with its built-in templates.  Hail Damian Conway!)
+The plugin works perfectly with other template plugins, i.e.
+L<Module::Starter::PBP> (I started using it to develop this module)
 
 =head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
 
 Please report any bugs or feature requests to
 C<bug-module-starter-smart@rt.cpan.org>, or through the web interface at
@@ -342,7 +349,7 @@ L<http://rt.cpan.org>.
 
 =head1 ACKNOWLEDGEMENT
 
-Special thanks to David Messina, who wrote the entire section of use-cases.
+Special thanks to David Messina, who kindly contributes the example.
 
 =head1 AUTHOR
 
@@ -350,7 +357,7 @@ Ruey-Cheng Chen  C<< <rueycheng@gmail.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2006, Ruey-Cheng Chen C<< <rueycheng@gmail.com> >>. All rights reserved.
+Copyright (c) 2006, 2012 Ruey-Cheng Chen C<< <rueycheng@gmail.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
