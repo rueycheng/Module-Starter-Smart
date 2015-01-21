@@ -9,19 +9,19 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/Module/Starter/Smart.pm',
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
-	'ExtUtils::Command' => 0,
-	'File::Spec' => 0,
-	'parent' => 0,
-	'Module::Starter' => 1.58,
+        'Test::More'         => 0,
+        'ExtUtils::Command'  => 0,
+        'File::Spec'         => 0,
+        'parent'             => 0,
+        'Module::Starter'    => 1.58,
     },
     META_MERGE => {
         'meta-spec' => { version => 2 },
         resources => {
             repository => {
-                type => 'git',
-                url => 'https://github.com/rueycheng/Module-Starter-Smart.git',
-                web => 'https://github.com/rueycheng/Module-Starter-Smart',
+                type  => 'git',
+                url   => 'https://github.com/rueycheng/Module-Starter-Smart.git',
+                web   => 'https://github.com/rueycheng/Module-Starter-Smart',
             },
         },
     },
