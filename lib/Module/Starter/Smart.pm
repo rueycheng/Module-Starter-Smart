@@ -35,8 +35,8 @@ our $VERSION = '0.0.5';
 Module::Starter::Smart is a simple helper plugin for L<Module::Starter>.  It
 subclasses L<Module::Starter::Simple> and provides its own implementation for
 several file creation subroutines, such as C<create_distro>, C<create_modules>,
-C<create_t>, and so on.  These new implementations were designed to work 
-with existing distributions.  
+C<create_t>, and so on.  These new implementations were designed to work
+with existing distributions.
 
 When invoked, the plugin checks if the distribution is already created.  If so,
 the plugin would bypass C<create_basedir>) and go ahead pull in all the
@@ -54,13 +54,13 @@ Goof::Troop.
 
     % ls -R Goof-Ball
     Build.PL  Changes   MANIFEST  README    lib/      t/
-    
+
     Goof-Ball/lib:
     Goof/
-    
+
     Goof-Ball/lib/Goof:
     Ball.pm
-    
+
     Goof-Ball/t:
     00.load.t       perlcritic.t    pod-coverage.t  pod.t
 
@@ -70,16 +70,16 @@ module:
 
     % module-starter --distro=Goof-Ball --module=Goof::Troop
     Created starter directories and files
-    
+
     % ls -R Goof-Ball
     Build.PL  Changes   MANIFEST  README    lib/      t/
-    
+
     Goof-Ball/lib:
     Goof/
-    
+
     Goof-Ball/lib/Goof:
     Ball.pm   Troop.pm
-    
+
     Goof-Ball/t:
     00.load.t       perlcritic.t    pod-coverage.t  pod.t
 
@@ -106,13 +106,13 @@ sub create_distro {
     my $class = shift;
     my $self = ref $class? $class: $class->new(@_);
 
-    my $basedir = 
-	$self->{dir} || 
-	$self->{distro} || 
-	do { 
-	    (my $first = $self->{modules}[0]) =~ s/::/-/g;
-	    $first; 
-	};
+    my $basedir =
+        $self->{dir} ||
+        $self->{distro} ||
+        do {
+            (my $first = $self->{modules}[0]) =~ s/::/-/g;
+            $first;
+        };
 
     $self->{modules} = [ _unique_sort _pull_modules($basedir), @{$self->{modules}} ];
     $self->SUPER::create_distro;
@@ -153,12 +153,12 @@ sub _create_module {
         File::Spec->catfile('lib', @parts, $filepart);
 
     if (-e $module_file) {
-	$self->progress( "Skipped $module_file" );
+        $self->progress( "Skipped $module_file" );
     } else {
-	open( my $fh, ">", $module_file ) or die "Can't create $module_file: $!\n";
-	print $fh $self->module_guts( $module, $rtname );
-	close $fh;
-	$self->progress( "Created $module_file" );
+        open( my $fh, ">", $module_file ) or die "Can't create $module_file: $!\n";
+        print $fh $self->module_guts( $module, $rtname );
+        close $fh;
+        $self->progress( "Created $module_file" );
     }
 
     return $manifest_file;
@@ -185,12 +185,12 @@ sub _create_t {
     my $fname = File::Spec->catfile( @dirparts, $filename );
 
     if (-e $fname) {
-	$self->progress( "Skipped $fname" );
+        $self->progress( "Skipped $fname" );
     } else {
-	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
-	print $fh $content;
-	close $fh;
-	$self->progress( "Created $fname" );
+        open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
+        print $fh $content;
+        close $fh;
+        $self->progress( "Created $fname" );
     }
 
     return "t/$filename";
@@ -203,17 +203,17 @@ sub create_Makefile_PL {
     my @parts = split( /::/, $main_module );
     my $pm = pop @parts;
     my $main_pm_file = File::Spec->catfile( "lib", @parts, "${pm}.pm" );
-       $main_pm_file =~ s{\\}{/}g; # even on Win32, use forward slash
+    $main_pm_file =~ s{\\}{/}g; # even on Win32, use forward slash
 
     my $fname = File::Spec->catfile( $self->{basedir}, "Makefile.PL" );
 
     if (-e $fname) {
-	$self->progress( "Skipped $fname" );
+        $self->progress( "Skipped $fname" );
     } else {
-	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
-	print $fh $self->Makefile_PL_guts($main_module, $main_pm_file);
-	close $fh;
-	$self->progress( "Created $fname" );
+        open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
+        print $fh $self->Makefile_PL_guts($main_module, $main_pm_file);
+        close $fh;
+        $self->progress( "Created $fname" );
     }
 
     return "Makefile.PL";
@@ -226,17 +226,17 @@ sub create_Build_PL {
     my @parts = split( /::/, $main_module );
     my $pm = pop @parts;
     my $main_pm_file = File::Spec->catfile( "lib", @parts, "${pm}.pm" );
-       $main_pm_file =~ s{\\}{/}g; # even on Win32, use forward slash
+    $main_pm_file =~ s{\\}{/}g; # even on Win32, use forward slash
 
     my $fname = File::Spec->catfile( $self->{basedir}, "Build.PL" );
-    
+
     if (-e $fname) {
-	$self->progress( "Skipped $fname" );
+        $self->progress( "Skipped $fname" );
     } else {
-	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
-	print $fh $self->Build_PL_guts($main_module, $main_pm_file);
-	close $fh;
-	$self->progress( "Created $fname" );
+        open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
+        print $fh $self->Build_PL_guts($main_module, $main_pm_file);
+        close $fh;
+        $self->progress( "Created $fname" );
     }
 
     return "Build.PL";
@@ -248,12 +248,12 @@ sub create_Changes {
     my $fname = File::Spec->catfile( $self->{basedir}, "Changes" );
 
     if (-e $fname) {
-	$self->progress( "Skipped $fname" );
+        $self->progress( "Skipped $fname" );
     } else {
-	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
-	print $fh $self->Changes_guts();
-	close $fh;
-	$self->progress( "Created $fname" );
+        open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
+        print $fh $self->Changes_guts();
+        close $fh;
+        $self->progress( "Created $fname" );
     }
 
     return "Changes";
@@ -266,12 +266,12 @@ sub create_README {
     my $fname = File::Spec->catfile( $self->{basedir}, "README" );
 
     if (-e $fname) {
-	$self->progress( "Skipped $fname" );
+        $self->progress( "Skipped $fname" );
     } else {
-	open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
-	print $fh $self->README_guts($build_instructions);
-	close $fh;
-	$self->progress( "Created $fname" );
+        open( my $fh, ">", $fname ) or die "Can't create $fname: $!\n";
+        print $fh $self->README_guts($build_instructions);
+        close $fh;
+        $self->progress( "Created $fname" );
     }
 
     return "README";
