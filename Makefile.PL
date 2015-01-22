@@ -8,8 +8,13 @@ WriteMakefile(
     VERSION_FROM        => 'lib/Module/Starter/Smart.pm',
     ABSTRACT_FROM       => 'lib/Module/Starter/Smart.pm',
     PL_FILES            => {},
+    BUILD_REQUIRES      => {
+        'ExtUtils::MakeMaker'  => 0,
+        'File::Spec'           => 0,
+        'Test::More'           => 0,
+        'Test::TempDir::Tiny'  => 0,
+    },
     PREREQ_PM => {
-        'Test::More'         => 0,
         'ExtUtils::Command'  => 0,
         'File::Spec'         => 0,
         'parent'             => 0,
