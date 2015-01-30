@@ -11,14 +11,18 @@ WriteMakefile(
     BUILD_REQUIRES      => {
         'ExtUtils::MakeMaker'  => 0,
         'File::Spec'           => 0,
+        'parent'               => 0,
+        'Module::Starter'      => 1.58,
         'Test::More'           => 0,
         'Test::TempDir::Tiny'  => 0,
     },
     PREREQ_PM => {
-        'ExtUtils::Command'  => 0,
-        'File::Spec'         => 0,
-        'parent'             => 0,
-        'Module::Starter'    => 1.58,
+        'ExtUtils::Command'    => 0,
+        'File::Spec'           => 0,
+        'parent'               => 0,
+        'Module::Starter'      => 1.58,
+	'Test::More'           => 0,
+        'Test::TempDir::Tiny'  => 0,
     },
     META_MERGE => {
         'meta-spec' => { version => 2 },
