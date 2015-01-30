@@ -1,5 +1,8 @@
 Revision history for Module-Starter-Smart
 
+0.0.6  Jan 30, 2015
+    * Some amendments to the code for clarity and a new test for basic function
+
 0.0.5  Jan 18, 2014
     * Fix typos and update CPAN metadata
 
