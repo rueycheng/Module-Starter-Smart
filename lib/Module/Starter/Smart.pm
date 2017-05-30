@@ -170,11 +170,12 @@ sub create_t {
 }
 
 sub _create_t {
-    my $self = shift;
+    my $self     = shift;
+    my $testdir  = @_ == 2 ? 't' : shift;
     my $filename = shift;
-    my $content = shift;
+    my $content  = shift;
 
-    my @dirparts = ( $self->{basedir}, "t" );
+    my @dirparts = ( $self->{basedir}, $testdir );
     my $tdir = File::Spec->catdir( @dirparts );
     if ( not -d $tdir ) {
         local @ARGV = $tdir;
@@ -193,7 +194,7 @@ sub _create_t {
         $self->progress( "Created $fname" );
     }
 
-    return "t/$filename";
+    return File::Spec->catfile( $testdir, $filename );
 }
 
 sub create_Makefile_PL {
