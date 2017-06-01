@@ -12,6 +12,7 @@ my $root = File::Spec->catdir($tempdir, 'Modern-Mo');
     };
 
     Module::Starter->create_distro(
+	author   => 'me',
         builder  => 'ExtUtils::MakeMaker',
         modules  => ['Modern::Mo'],
         email    => 'me@there.com',
@@ -33,6 +34,7 @@ require_ok('Modern::Mo');
     };
 
     Module::Starter->create_distro(
+	author   => 'me',
         builder  => 'ExtUtils::MakeMaker',
         modules  => ['Modern::Mumu'],
         email    => 'me@there.com',
