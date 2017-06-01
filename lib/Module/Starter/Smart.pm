@@ -10,11 +10,11 @@ an existing distribution
 
 =head1 VERSION
 
-version 0.0.6
+version 0.0.7
 
 =cut
 
-our $VERSION = '0.0.6';
+our $VERSION = '0.0.7';
 
 =head1 SYNOPSIS
 
@@ -356,11 +356,11 @@ Special thanks to David Messina, who kindly contributes the example.
 
 =head1 AUTHOR
 
-Ruey-Cheng Chen  C<< <rueycheng@gmail.com> >>
+Ruey-Cheng Chen  C<< <rueycheng@cpan.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2006, 2012 Ruey-Cheng Chen C<< <rueycheng@gmail.com> >>. All rights reserved.
+Copyright (c) 2006, 2012, 2017 Ruey-Cheng Chen C<< <rueycheng@cpan.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
