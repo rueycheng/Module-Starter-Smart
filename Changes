@@ -1,5 +1,8 @@
 Revision history for Module-Starter-Smart
 
+0.0.8  Jun 4, 2017
+    * Bug fixes for tests
+
 0.0.7  Jun 1, 2017
     * Fix inconsistencies with more recent releases of Module::Starter::Simple (Markus Böhme)
     * Some more bug fixes
