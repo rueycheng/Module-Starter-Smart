@@ -19,7 +19,7 @@ done_testing();
 sub test_old_interface {
     my $tempdir  = tempdir();
     my $tdir     = catdir($tempdir, 't');
-    my $testfile = '01.test.t';
+    my $testfile = '01.test_old_interface.t';
     my $starter  = Module::Starter::Smart->new();
     $starter->{basedir} = $tempdir;
 
@@ -32,8 +32,8 @@ sub test_new_interface {
     my $tempdir   = tempdir();
     my $tdir      = catdir($tempdir, 't');
     my $xtdir     = catdir($tempdir, 'xt');
-    my $testfile1 = '01.test.t';
-    my $testfile2 = '02.test.t';
+    my $testfile1 = '01.test_new_interface.t';
+    my $testfile2 = '02.test_new_interface.t';
     my $starter   = Module::Starter::Smart->new();
     $starter->{basedir} = $tempdir;
 

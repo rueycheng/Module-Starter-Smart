@@ -3,6 +3,8 @@ package Module::Starter::Smart;
 use warnings;
 use strict;
 
+=encoding utf8
+
 =head1 NAME
 
 Module::Starter::Smart - A Module::Starter plugin for adding new modules into
@@ -10,11 +12,11 @@ an existing distribution
 
 =head1 VERSION
 
-version 0.0.7
+version 0.0.8
 
 =cut
 
-our $VERSION = '0.0.7';
+our $VERSION = '0.0.8';
 
 =head1 SYNOPSIS
 
@@ -352,7 +354,23 @@ L<http://rt.cpan.org>.
 
 =head1 ACKNOWLEDGEMENT
 
-Special thanks to David Messina, who kindly contributes the example.
+Special thanks to the following contributors:
+
+=over 4
+
+=item *
+David Messina
+
+=item *
+David Steinbrunner
+
+=item *
+Andrew Kirkpatrick
+
+=item *
+Markus Böhme
+
+=back
 
 =head1 AUTHOR
 
